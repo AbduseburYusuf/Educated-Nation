@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import api from '../../services/api.js';
+import { API_URL } from '../../services/api.js';
 import SiteFooter from '../../components/SiteFooter.jsx';
 
 const registerHighlights = [
@@ -31,7 +31,17 @@ export default function Register() {
         password: credentials.password,
       };
 
-      await api.post('/auth/register', payload);
+      const response = await fetch(`${API_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw data;
+      }
+
       navigate('/login', {
         state: {
           registered: true,
@@ -39,15 +49,15 @@ export default function Register() {
         },
       });
     } catch (err) {
-      console.error('Register error:', err.response);
+      console.error('Register error:', err);
       let errorMsg = 'Registration failed';
-      if (err.response?.data) {
-        if (err.response.data.error) {
-          errorMsg = err.response.data.error;
-        } else if (err.response.data.errors) {
-          errorMsg = err.response.data.errors.map(e => e.msg).join(', ');
+      if (err) {
+        if (err.error) {
+          errorMsg = err.error;
+        } else if (err.errors) {
+          errorMsg = err.errors.map((e) => e.msg).join(', ');
         } else {
-          errorMsg = JSON.stringify(err.response.data);
+          errorMsg = JSON.stringify(err);
         }
       }
       setError(errorMsg);

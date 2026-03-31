@@ -146,6 +146,7 @@ api.interceptors.response.use(
 );
 
 export {
+  API_URL,
   authAPI,
   personsAPI,
   woredasAPI,
