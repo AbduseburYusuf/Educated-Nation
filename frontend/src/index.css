@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Form utilities */
+.form-group {
+  @apply space-y-1 mb-4;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  border-width: 1px;
+  border-color: #d6d3d1;
+  border-radius: 1rem;
+  box-shadow: inset 0 1px 2px 0 rgb(0 0 0 / 0.03), 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  background-color: #ffffff;
+  color: #1c1917;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.form-input::placeholder, .form-select::placeholder {
+  color: #a8a29e;
+}
+
+.form-input:focus, .form-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #fef3c7;
+  border-color: #d97706;
+  background-color: #fffefc;
+}
+
+.card {
+  @apply bg-white shadow-xl rounded-2xl p-6 md:p-8;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+.login-shell {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.14), transparent 24%),
+    radial-gradient(circle at 88% 20%, rgba(59, 130, 246, 0.14), transparent 22%),
+    linear-gradient(145deg, #010512 0%, #09111f 36%, #17263b 100%);
+}
+
+.login-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.login-orb-one {
+  top: 6%;
+  left: -6%;
+  width: 18rem;
+  height: 18rem;
+  background: rgba(14, 165, 233, 0.18);
+}
+
+.login-orb-two {
+  right: -6%;
+  bottom: 8%;
+  width: 22rem;
+  height: 22rem;
+  background: rgba(56, 189, 248, 0.14);
+}
+
+.login-grid {
+  position: relative;
+}
+
+.login-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image:
+    linear-gradient(rgba(125, 211, 252, 0.26) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 211, 252, 0.18) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent 94%);
+  pointer-events: none;
+}
+
+.login-display {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.035em;
+}
+
+.register-shell {
+  background:
+    radial-gradient(circle at 14% 16%, rgba(16, 185, 129, 0.16), transparent 24%),
+    radial-gradient(circle at 84% 20%, rgba(45, 212, 191, 0.15), transparent 20%),
+    linear-gradient(145deg, #03201f 0%, #083d31 38%, #0c5a57 100%);
+}
+
+.register-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(68px);
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.register-orb-one {
+  top: 8%;
+  left: -6%;
+  width: 18rem;
+  height: 18rem;
+  background: rgba(52, 211, 153, 0.16);
+}
+
+.register-orb-two {
+  right: -5%;
+  bottom: 6%;
+  width: 22rem;
+  height: 22rem;
+  background: rgba(20, 184, 166, 0.16);
+}
+
+.register-grid {
+  position: relative;
+}
+
+.register-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image:
+    linear-gradient(rgba(167, 243, 208, 0.24) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(153, 246, 228, 0.18) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent 94%);
+  pointer-events: none;
+}
+
+.register-display {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.035em;
+}
+
+.auth-hero-panel {
+  box-shadow: 0 28px 80px rgba(2, 6, 23, 0.34);
+}
+
+.auth-form-panel {
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 26px 70px rgba(15, 23, 42, 0.16);
+}
+
+.auth-form-panel input::placeholder {
+  color: #78716c;
+}
+
+.admin-auth-shell {
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.28), transparent 28%),
+    radial-gradient(circle at 85% 18%, rgba(120, 113, 108, 0.22), transparent 22%),
+    linear-gradient(135deg, #1c1917 0%, #292524 42%, #44403c 100%);
+}
+
+.admin-auth-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  background-image:
+    linear-gradient(rgba(251, 191, 36, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 191, 36, 0.14) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent 92%);
+}
+
+.admin-auth-title {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.03em;
+}
