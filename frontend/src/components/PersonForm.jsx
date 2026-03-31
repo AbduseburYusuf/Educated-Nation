@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 import { woredasAPI, villagesAPI, professionsAPI, educationLevelsAPI, organizationsAPI, personsAPI, studentsAPI, workersAPI, unemployedAPI } from '../services/api.js';
-import { STUDENT_LEVELS, PERSON_TYPES, GENDERS } from '../utils/constants.js';
+import { STUDENT_LEVELS, PERSON_TYPES, GENDERS, REGION_VILLAGE_OPTIONS } from '../utils/constants.js';
+
+const normalizeVillageName = (name = '') => {
+  const normalized = name.toLowerCase().replace(/[^a-z]/g, '');
+  if (normalized === 'esakoy' || normalized === 'esaqoy') {
+    return 'esaqoy';
+  }
+  return normalized;
+};
 
 export default function PersonForm({ person: initialPerson, editMode = false, onSuccess }) {
   const [formData, setFormData] = useState({
@@ -107,8 +115,27 @@ export default function PersonForm({ person: initialPerson, editMode = false, on
         educationLevelsAPI.getAll(),
         organizationsAPI.getAll()
       ]);
-      setWoredas(woredasRes.data);
-      setVillages(villagesRes.data);
+      const orderedRegionNames = Object.keys(REGION_VILLAGE_OPTIONS);
+      const allowedWoredas = orderedRegionNames
+        .map((regionName) => woredasRes.data.find((woreda) => woreda.name === regionName))
+        .filter(Boolean);
+
+      const allowedVillages = allowedWoredas.flatMap((woreda) =>
+        REGION_VILLAGE_OPTIONS[woreda.name]
+          .map((villageName) => {
+            const matchingVillage = villagesRes.data.find(
+              (village) =>
+                String(village.woreda_id) === String(woreda.id) &&
+                normalizeVillageName(village.name) === normalizeVillageName(villageName)
+            );
+
+            return matchingVillage ? { ...matchingVillage, name: villageName } : null;
+          })
+          .filter(Boolean)
+      );
+
+      setWoredas(allowedWoredas);
+      setVillages(allowedVillages);
       setProfessions(professionsRes.data);
       setEducationLevels(educationLevelsRes.data);
       setOrganizations(organizationsRes.data);

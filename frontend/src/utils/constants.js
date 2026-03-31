@@ -25,8 +25,8 @@ export const GENDERS = [
 
 export const REGION_VILLAGE_OPTIONS = {
   Afar: ['Ifat'],
-  Harari: ['Omerdin', 'Koromi', 'Afardeba', 'Hulo'],
-  Oromia: ['Adasha', 'Esaqoy', 'Ikiyo']
+  Harari: ['Omerdin', 'Koromi', 'Hulo', 'Afardeba'],
+  Oromia: ['Esakoy', 'Adasha', 'Ikiyo']
 };
 
 export const SAMPLE_PROFESSIONS = [
