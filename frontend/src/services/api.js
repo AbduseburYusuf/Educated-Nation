@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const API_URL = 'https://educated-nation.onrender.com';
+const baseURL = `${API_URL}/api`;
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL,
 });
 
 const authAPI = {
