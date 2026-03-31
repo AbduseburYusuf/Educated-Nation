@@ -131,8 +131,44 @@ CREATE INDEX IF NOT EXISTS idx_worker_profession ON worker(profession_id);
 INSERT INTO education_level (name) VALUES ('diploma'), ('degree'), ('masters') ON CONFLICT DO NOTHING;
 
 INSERT INTO woreda (name) VALUES 
-('Addis Ababa'), ('Oromia'), ('Amhara'), ('Tigray'), ('SNNPR'), ('Afar'), ('Somali') 
+('Addis Ababa'), ('Oromia'), ('Amhara'), ('Tigray'), ('SNNPR'), ('Afar'), ('Somali'), ('Harari') 
 ON CONFLICT DO NOTHING;
+
+INSERT INTO village (name, woreda_id)
+SELECT 'Ifat', id
+FROM woreda
+WHERE name = 'Afar'
+  AND NOT EXISTS (
+    SELECT 1 FROM village
+    WHERE woreda_id = woreda.id
+      AND lower(name) = lower('Ifat')
+  );
+
+INSERT INTO village (name, woreda_id)
+SELECT village_name, woreda_id
+FROM (
+  VALUES
+    ('Omerdin', (SELECT id FROM woreda WHERE name = 'Harari')),
+    ('Koromi', (SELECT id FROM woreda WHERE name = 'Harari')),
+    ('Hulo', (SELECT id FROM woreda WHERE name = 'Harari')),
+    ('Afardeba', (SELECT id FROM woreda WHERE name = 'Harari')),
+    ('Esakoy', (SELECT id FROM woreda WHERE name = 'Oromia')),
+    ('Adasha', (SELECT id FROM woreda WHERE name = 'Oromia')),
+    ('Ikiyo', (SELECT id FROM woreda WHERE name = 'Oromia'))
+) AS required_villages(village_name, woreda_id)
+WHERE woreda_id IS NOT NULL
+  AND NOT EXISTS (
+    SELECT 1
+    FROM village existing
+    WHERE existing.woreda_id = required_villages.woreda_id
+      AND (
+        lower(existing.name) = lower(required_villages.village_name)
+        OR (
+          lower(required_villages.village_name) = 'esakoy'
+          AND lower(existing.name) = 'esaqoy'
+        )
+      )
+  );
 
 -- Trigger for updated_at
 CREATE OR REPLACE FUNCTION update_updated_at_column()

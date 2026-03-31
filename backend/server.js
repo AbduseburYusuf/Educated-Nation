@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const ensureReferenceData = require('./bootstrap/ensureReferenceData.js');
 
 const authRoutes = require('./routes/auth.js');
 const woredaRoutes = require('./routes/woredas.js');
@@ -62,6 +63,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server on http://localhost:${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await ensureReferenceData();
+    console.log('Reference data ensured');
+  } catch (err) {
+    console.error('Reference data bootstrap failed:', err);
+  }
+
+  app.listen(PORT, () => {
+    console.log(`Server on http://localhost:${PORT}`);
+  });
+};
+
+startServer();
