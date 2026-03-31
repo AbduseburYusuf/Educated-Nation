@@ -6,6 +6,7 @@ const db = require('../db.js');
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'nation_secret_key_change_me';
+const ALLOW_DEMO_ADMIN = process.env.ALLOW_DEMO_ADMIN === 'true';
 
 // POST /api/auth/register
 router.post('/register', [
@@ -50,6 +51,16 @@ router.post('/login', [
     const user = await User.findByUsername(username) || await User.findByEmail(username);
     if (!user || !(await User.comparePassword(password, user.password_hash))) {
       return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const isDefaultDemoAdmin =
+      user.role === 'admin' &&
+      user.username === 'admin' &&
+      user.email === 'admin@nation.et' &&
+      password === 'password123';
+
+    if (isDefaultDemoAdmin && !ALLOW_DEMO_ADMIN) {
+      return res.status(403).json({ error: 'Default demo admin access is disabled. Use a private admin account.' });
     }
 
     const token = jwt.sign(

@@ -23,11 +23,6 @@ export default function AdminLogin() {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  const useDemoAdmin = () => {
-    setCredentials({ username: 'admin', password: 'password123' });
-    setError('');
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -110,19 +105,10 @@ export default function AdminLogin() {
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-900">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="font-semibold">Demo admin credentials</p>
-                      <p className="mt-1 text-amber-800">Username: <span className="font-semibold">admin</span>  Password: <span className="font-semibold">password123</span></p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={useDemoAdmin}
-                      className="rounded-xl bg-amber-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-white transition hover:bg-amber-700"
-                    >
-                      Use Demo Admin
-                    </button>
-                  </div>
+                  <p className="font-semibold">Private admin access only</p>
+                  <p className="mt-1 text-amber-800">
+                    Sign in with a private administrator account. Public demo credentials are not available here.
+                  </p>
                 </div>
 
                 <label className="block">

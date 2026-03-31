@@ -2,11 +2,10 @@
 -- Run: psql -h localhost -U postgres -d nation_db -f seed.sql
 
 -- Users
-INSERT INTO users (username, email, password_hash, role) VALUES 
-('admin', 'admin@nation.et', '$2a$12$DP4e2knO7weAjVU.Ao50oOMeyCH096.X37wP/yk7NsqR8..GE93N.', 'admin'),
+INSERT INTO users (username, email, password_hash, role) VALUES
 ('testuser', 'test@nation.et', '$2a$12$TLxzEGZRj7Hfkdf0KuFZzests.BpGkTP/OitdvQSGT1fmfB2zq/Ei', 'user')
 ON CONFLICT (username) DO NOTHING;
--- Passwords: 'password123' for both admin and testuser
+-- Password for testuser: 'password123'
 
 -- More woredas/villages
 INSERT INTO woreda (name) VALUES 
@@ -61,9 +60,9 @@ INSERT INTO organization (name) VALUES
 
 -- Sample persons with user_id, gender, birth_date, unemployed
 INSERT INTO person (user_id, name, gender, birth_date, phone, national_id, woreda_id, village_id, type) VALUES 
-(2, 'Test Student', 'male', '2000-05-15', '0912345678', 'NAT001', 1, 1, 'student'),
-(2, 'Test Worker', 'female', '1995-03-20', '0918765432', 'NAT002', 2, 2, 'worker'),
-(1, 'Test Unemployed', 'other', '1998-11-10', '0911122334', 'NAT003', 3, 3, 'unemployed_graduate')
+(NULL, 'Test Student', 'male', '2000-05-15', '0912345678', 'NAT001', 1, 1, 'student'),
+(NULL, 'Test Worker', 'female', '1995-03-20', '0918765432', 'NAT002', 2, 2, 'worker'),
+(NULL, 'Test Unemployed', 'other', '1998-11-10', '0911122334', 'NAT003', 3, 3, 'unemployed_graduate')
 ON CONFLICT (national_id) DO NOTHING;
 
 -- Sample student
